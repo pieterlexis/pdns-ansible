@@ -64,6 +64,13 @@ pdns_debug_symbols_package_name: "{{ default_pdns_debug_symbols_package_name }}"
 pdns_user: pdns
 pdns_group: pdns
 
+# When set, `User` and `Group` are set in the override file and the setuid/setgid
+# options are set to an empty string. The /etc/powerdns (or /etc/pdns) directory
+# and files therein will also be owned by these users/groups when set. They will
+# be root otherwise.
+pdns_systemd_user: ''
+pdns_systemd_group: ''
+
 # Name of the PowerDNS Authoritative Server Service
 pdns_service_name: "pdns"
 

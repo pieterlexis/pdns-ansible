@@ -1,6 +1,8 @@
 config-dir={{ pdns_config_dir }}
-setuid={{ pdns_user }}
-setgid={{ pdns_group }}
+setuid={% if pdns_systemd_user == '' %}{{ pdns_user }}{% endif %}
+
+setgid={% if pdns_systemd_group == '' %}{{ pdns_group }}{% endif %}
+
 {% for config_item, value in pdns_config.items() | sort() %}
 {% if config_item not in ["config-dir", "launch", "setuid", "setgid"] %}
 {% if value == True %}

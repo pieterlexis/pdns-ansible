@@ -24,16 +24,16 @@
   file:
     name: "{{ pdns_config_dir }}"
     state: directory
-    owner: "root"
-    group: "root"
+    owner: "{% if pdns_systemd_user == '' %}root{% else %}{{ pdns_systemd_user }}{% endif %}"
+    group: "{% if pdns_systemd_group == '' %}root{% else %}{{ pdns_systemd_group }}{% endif %}"
     mode: 0750
 
 - name: Generate the PowerDNS Authoritative Server configuration
   template:
     src: pdns.conf.j2
     dest: "{{ pdns_config_dir }}/{{ pdns_config_file }}"
-    owner: "root"
-    group: "root"
+    owner: "{% if pdns_systemd_user == '' %}root{% else %}{{ pdns_systemd_user }}{% endif %}"
+    group: "{% if pdns_systemd_group == '' %}root{% else %}{{ pdns_systemd_group }}{% endif %}"
     mode: 0640
   notify: restart PowerDNS
 
@@ -41,7 +41,7 @@
   file:
     name: "{{ pdns_config['include-dir'] }}"
     state: directory
-    owner: "root"
-    group: "root"
+    owner: "{% if pdns_systemd_user == '' %}root{% else %}{{ pdns_systemd_user }}{% endif %}"
+    group: "{% if pdns_systemd_group == '' %}root{% else %}{{ pdns_systemd_group }}{% endif %}"
     mode: 0750
   when: "pdns_config['include-dir'] is defined"

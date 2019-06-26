@@ -1,4 +1,8 @@
 [Service]
+{% if pdns_systemd_user != '' %}User={{ pdns_systemd_user }}{% endif %}
+
+{% if pdns_systemd_group != '' %}Group={{ pdns_systemd_group }}{% endif %}
+
 {% for k, v in pdns_service_overrides.items() %}
 {{ k }}={{ v }}
 {% endfor %}
