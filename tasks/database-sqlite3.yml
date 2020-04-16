@@ -18,8 +18,19 @@
     owner: "root"
     group: "root"
     state: directory
-    mode: 0755
+    mode: 0750
   with_items: "{{ pdns_sqlite_databases_locations }}"
+  when: _pdns_running_version is version_compare('4.2.0', '<')
+
+- name: Ensure that the directories containing the PowerDNS SQLite databases exist
+  file:
+    name: "{{ item | dirname }}"
+    owner: "{{ pdns_user }}"
+    group: "{{ pdns_group }}"
+    state: directory
+    mode: 0750
+  with_items: "{{ pdns_sqlite_databases_locations }}"
+  when: _pdns_running_version is version_compare('4.2.0', '>=')
 
 - block:
 
