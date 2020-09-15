@@ -6,8 +6,8 @@
     file:
       name: "/etc/systemd/system/{{ pdns_service_name }}.service.d"
       state: directory
-      owner: root
-      group: root
+      owner: "{{ pdns_fileowner.user }}"
+      group: "{{ pdns_fileowner.group }}"
 
   - name: Override the PowerDNS Authoritative Server unit (systemd)
     template:
@@ -29,16 +29,16 @@
   file:
     name: "{{ pdns_config_dir }}"
     state: directory
-    owner: "root"
-    group: "root"
-    mode: 0755
+    owner: "{{ pdns_fileowner.user }}"
+    group: "{{ pdns_fileowner.group }}"
+    mode: 0750
 
 - name: Generate the PowerDNS configuration
   template:
     src: pdns.conf.j2
     dest: "{{ pdns_config_dir }}/{{ pdns_config_file }}"
-    owner: "root"
-    group: "{{ pdns_group }}"
+    owner: "{{ pdns_fileowner.user }}"
+    group: "{{ pdns_fileowner.group }}"
     mode: 0640
   register: _pdns_configuration
 
@@ -46,9 +46,9 @@
   file:
     name: "{{ pdns_config['include-dir'] }}"
     state: directory
-    owner: "root"
-    group: "root"
-    mode: 0755
+    owner: "{{ pdns_fileowner.user }}"
+    group: "{{ pdns_fileowner.group }}"
+    mode: 0750
   when: "pdns_config['include-dir'] is defined"
 
 - name: Restart PowerDNS
