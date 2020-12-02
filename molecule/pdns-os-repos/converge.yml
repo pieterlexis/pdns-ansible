@@ -3,5 +3,6 @@
   vars_files:
     - ../resources/vars/pdns-common.yml
     - ../resources/vars/pdns-backends.yml
+    - ../resources/vars/pdns-os-repos.yml
   roles:
     - { role: pdns-ansible }

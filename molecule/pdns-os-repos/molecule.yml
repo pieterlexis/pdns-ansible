@@ -25,6 +25,11 @@ platforms:
     image: ubuntu:20.04
     dockerfile_tpl: debian-systemd
 
+  - name: centos-8
+    groups: ["pdns"]
+    image: centos:8
+    dockerfile_tpl: centos-systemd
+
   # In order to run the tests we need
   # a MySQL container to be up & running
   - name: mysql
